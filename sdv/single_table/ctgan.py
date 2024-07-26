@@ -358,6 +358,7 @@ class TVAESynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
     def __init__(
         self,
         metadata,
+        save_path,
         enforce_min_max_values=True,
         enforce_rounding=True,
         embedding_dim=128,
@@ -369,12 +370,15 @@ class TVAESynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
         epochs=300,
         loss_factor=2,
         cuda=True,
+        patience=100,
+        weights=[],
     ):
         super().__init__(
             metadata=metadata,
             enforce_min_max_values=enforce_min_max_values,
             enforce_rounding=enforce_rounding,
         )
+        self.save_path = save_path
         self.embedding_dim = embedding_dim
         self.compress_dims = compress_dims
         self.decompress_dims = decompress_dims
@@ -384,8 +388,11 @@ class TVAESynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
         self.epochs = epochs
         self.loss_factor = loss_factor
         self.cuda = cuda
+        self.patience = patience
+        self.weights = weights
 
         self._model_kwargs = {
+            'save_path': save_path,
             'embedding_dim': embedding_dim,
             'compress_dims': compress_dims,
             'decompress_dims': decompress_dims,
@@ -395,6 +402,8 @@ class TVAESynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
             'epochs': epochs,
             'loss_factor': loss_factor,
             'cuda': cuda,
+            'patience': patience,
+            'weights': weights
         }
 
     def _fit(self, processed_data):
