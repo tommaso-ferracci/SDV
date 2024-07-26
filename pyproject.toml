@@ -33,7 +33,7 @@ dependencies = [
     "pandas>=2.1.1;python_version>='3.12'",
     'tqdm>=4.29',
     'copulas>=0.11.0',
-    'ctgan>=0.10.0',
+    'ctgan @ git+https://github.com/tommaso-ferracci/ctgan.git@main#egg=ctgan',
     'deepecho>=0.6.0',
     'rdt>=1.12.0',
     'sdmetrics>=0.14.0',
