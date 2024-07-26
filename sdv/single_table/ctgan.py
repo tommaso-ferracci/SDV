@@ -152,6 +152,7 @@ class CTGANSynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
     def __init__(
         self,
         metadata,
+        save_path,
         enforce_min_max_values=True,
         enforce_rounding=True,
         locales=['en_US'],
@@ -169,6 +170,7 @@ class CTGANSynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
         epochs=300,
         pac=10,
         cuda=True,
+        patience=50,
     ):
         super().__init__(
             metadata=metadata,
@@ -177,6 +179,7 @@ class CTGANSynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
             locales=locales,
         )
 
+        self.save_path = save_path
         self.embedding_dim = embedding_dim
         self.generator_dim = generator_dim
         self.discriminator_dim = discriminator_dim
@@ -191,8 +194,10 @@ class CTGANSynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
         self.epochs = epochs
         self.pac = pac
         self.cuda = cuda
+        self.patience = patience
 
         self._model_kwargs = {
+            'save_path': save_path,
             'embedding_dim': embedding_dim,
             'generator_dim': generator_dim,
             'discriminator_dim': discriminator_dim,
@@ -207,6 +212,7 @@ class CTGANSynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
             'epochs': epochs,
             'pac': pac,
             'cuda': cuda,
+            'patience': patience,
         }
 
     def _estimate_num_columns(self, data):
