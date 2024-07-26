@@ -171,6 +171,7 @@ class CTGANSynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
         pac=10,
         cuda=True,
         patience=50,
+        weights=[],
     ):
         super().__init__(
             metadata=metadata,
@@ -195,6 +196,7 @@ class CTGANSynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
         self.pac = pac
         self.cuda = cuda
         self.patience = patience
+        self.weights = weights
 
         self._model_kwargs = {
             'save_path': save_path,
@@ -213,6 +215,7 @@ class CTGANSynthesizer(LossValuesMixin, BaseSingleTableSynthesizer):
             'pac': pac,
             'cuda': cuda,
             'patience': patience,
+            'weights': weights,
         }
 
     def _estimate_num_columns(self, data):
